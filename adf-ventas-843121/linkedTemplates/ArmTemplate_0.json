@@ -663,7 +663,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_CATEGORIA"
 				}
 			},
@@ -732,7 +732,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_CLIENTES"
 				}
 			},
@@ -766,7 +766,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_COUNTRY"
 				}
 			},
@@ -828,7 +828,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_FECHA"
 				}
 			},
@@ -862,7 +862,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_GENERO"
 				}
 			},
@@ -919,7 +919,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_PRODUCTOS"
 				}
 			},

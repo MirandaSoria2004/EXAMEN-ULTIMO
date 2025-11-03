@@ -1063,7 +1063,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_CATEGORIA"
 				}
 			},
@@ -1132,7 +1132,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_CLIENTES"
 				}
 			},
@@ -1166,7 +1166,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_COUNTRY"
 				}
 			},
@@ -1228,7 +1228,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_FECHA"
 				}
 			},
@@ -1262,7 +1262,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_GENERO"
 				}
 			},
@@ -1319,7 +1319,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "DIM_PRODUCTOS"
 				}
 			},
@@ -1390,7 +1390,7 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "gold",
+					"schema": "GOLD",
 					"table": "HECHOS_DETALLE_VENTA"
 				}
 			},
@@ -2044,6 +2044,152 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/CSV_Productos_CAT_MANT_Bronze')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_Bronze_Productos_CAT_MANT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Gold_DIM_COUNTRY')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "GOLD"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQL_Silver_Clientes",
+								"type": "DatasetReference"
+							},
+							"name": "SourceCountry"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQL_Gold_DIM_COUNTRY",
+								"type": "DatasetReference"
+							},
+							"name": "SinkDimCountry"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          cst_country as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT DISTINCT cst_country FROM [silver].[clientes] WHERE cst_country IS NOT NULL',",
+						"     format: 'query') ~> SourceCountry",
+						"SourceCountry select(mapColumn(",
+						"          CNTRY = cst_country",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CNTRY as integer,",
+						"          CNTRY as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          CNTRY",
+						"     )) ~> SinkDimCountry"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_Silver_Clientes')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_Gold_DIM_COUNTRY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Gold_DIM_GENERO')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "GOLD"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQL_Silver_Clientes",
+								"type": "DatasetReference"
+							},
+							"name": "SourceGenero"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQL_Gold_DIM_GENERO",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          cst_gndr as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT DISTINCT cst_gndr FROM [silver].[clientes] WHERE cst_gndr IS NOT NULL',",
+						"     format: 'query') ~> SourceGenero",
+						"SourceGenero select(mapColumn(",
+						"          GEN = cst_gndr",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_GEN as integer,",
+						"          GEN as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          GEN",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_Silver_Clientes')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_Gold_DIM_GENERO')]"
 			]
 		},
 		{
