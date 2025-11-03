@@ -1034,6 +1034,371 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_CATEGORIA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CAT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SUBCAT",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_CATEGORIA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_CLIENTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CLIENTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CST_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CST_KEY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CST_FIRSTNAME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CST_LASTNAME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CST_MARITAL_STATUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CST_GNDR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BDATE",
+						"type": "date"
+					},
+					{
+						"name": "ID_CNTRY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_GEN",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_CLIENTES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_COUNTRY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CNTRY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CNTRY",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_COUNTRY"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_FECHA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_FECHA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FECHA",
+						"type": "date"
+					},
+					{
+						"name": "ANIO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MES",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DIA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TRIMESTRE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOMBRE_MES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOMBRE_DIA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_FECHA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_GENERO')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_GEN",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GEN",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_GENERO"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_PRODUCTOS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_PRODUCTO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PRD_KEY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PRD_NM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PRD_COST",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "PRD_LINE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_CAT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MAINTENANCE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "DIM_PRODUCTOS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_HECHOS_DETALLE_VENTA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_HECHOS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SLS_ORD_NUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_CLIENTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_PRODUCTO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_ORDER_DT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SHIP_DT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SLS_SALES",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "SLS_QUANTITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SLS_PRICE",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "gold",
+					"table": "HECHOS_DETALLE_VENTA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQL_Silver_Clientes')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",

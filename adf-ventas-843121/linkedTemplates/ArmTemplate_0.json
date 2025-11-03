@@ -634,7 +634,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_Silver_Clientes')]",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_CATEGORIA')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -643,48 +643,28 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "SILVER"
+					"name": "GOLD"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "cst_id",
+						"name": "ID_CAT",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "cst_key",
+						"name": "CAT",
 						"type": "nvarchar"
 					},
 					{
-						"name": "cst_firstname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cst_lastname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cst_marital_status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cst_gndr",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cst_bdate",
-						"type": "date"
-					},
-					{
-						"name": "cst_country",
+						"name": "SUBCAT",
 						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
-					"schema": "silver",
-					"table": "clientes"
+					"schema": "gold",
+					"table": "DIM_CATEGORIA"
 				}
 			},
 			"dependsOn": [
@@ -692,7 +672,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_Silver_Productos')]",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_CLIENTES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -701,50 +681,59 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "SILVER"
+					"name": "GOLD"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "prd_id",
+						"name": "ID_CLIENTE",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "prd_key",
+						"name": "CST_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CST_KEY",
 						"type": "nvarchar"
 					},
 					{
-						"name": "prd_nm",
+						"name": "CST_FIRSTNAME",
 						"type": "nvarchar"
 					},
 					{
-						"name": "prd_cost",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "prd_line",
+						"name": "CST_LASTNAME",
 						"type": "nvarchar"
 					},
 					{
-						"name": "prd_cat",
+						"name": "CST_MARITAL_STATUS",
 						"type": "nvarchar"
 					},
 					{
-						"name": "prd_subcat",
+						"name": "CST_GNDR",
 						"type": "nvarchar"
 					},
 					{
-						"name": "prd_maintenance",
-						"type": "nvarchar"
+						"name": "BDATE",
+						"type": "date"
+					},
+					{
+						"name": "ID_CNTRY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_GEN",
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {
-					"schema": "silver",
-					"table": "productos"
+					"schema": "gold",
+					"table": "DIM_CLIENTES"
 				}
 			},
 			"dependsOn": [
@@ -752,7 +741,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_Silver_Ventas')]",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_COUNTRY')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -761,53 +750,24 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "SILVER"
+					"name": "GOLD"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "sls_ord_num",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sls_prd_key",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sls_cust_id",
+						"name": "ID_CNTRY",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "sls_order_dt",
-						"type": "date"
-					},
-					{
-						"name": "sls_ship_dt",
-						"type": "date"
-					},
-					{
-						"name": "sls_sales",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "sls_quantity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sls_price",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
+						"name": "CNTRY",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
-					"schema": "silver",
-					"table": "ventas"
+					"schema": "gold",
+					"table": "DIM_COUNTRY"
 				}
 			},
 			"dependsOn": [
@@ -815,210 +775,156 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_Bronze_Clientes')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_FECHA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"folder": {
-					"name": "BRONZE"
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
 				},
-				"type": "MappingDataFlow",
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_FECHA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FECHA",
+						"type": "date"
+					},
+					{
+						"name": "ANIO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MES",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DIA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TRIMESTRE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOMBRE_MES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOMBRE_DIA",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "CSV_Clientes_Bronze",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_SQL_Bronze_Clientes",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          cst_id as string,",
-						"          cst_key as string,",
-						"          cst_firstname as string,",
-						"          cst_lastname as string,",
-						"          cst_marital_status as string,",
-						"          cst_gndr as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          cst_id as string,",
-						"          cst_key as string,",
-						"          cst_firstname as string,",
-						"          cst_lastname as string,",
-						"          cst_marital_status as string,",
-						"          cst_gndr as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          cst_id,",
-						"          cst_key,",
-						"          cst_firstname,",
-						"          cst_lastname,",
-						"          cst_marital_status,",
-						"          cst_gndr",
-						"     )) ~> sink1"
-					]
+					"schema": "gold",
+					"table": "DIM_FECHA"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV_Clientes_Bronze')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Bronze_Clientes')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_Bronze_Clientes_BD_GEN')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_GENERO')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"folder": {
-					"name": "BRONZE"
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
 				},
-				"type": "MappingDataFlow",
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_GEN",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GEN",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "CSV_Clientes_BD_GEN_Bronze",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_SQL_Bronze_Clientes_BD_GEN",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          CID as string,",
-						"          BDATE as string,",
-						"          GEN as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CID as string,",
-						"          BDATE as string,",
-						"          GEN as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CID,",
-						"          BDATE,",
-						"          GEN",
-						"     )) ~> sink1"
-					]
+					"schema": "gold",
+					"table": "DIM_GENERO"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV_Clientes_BD_GEN_Bronze')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Bronze_Clientes_BD_GEN')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_Bronze_Clientes_location')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Gold_DIM_PRODUCTOS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"folder": {
-					"name": "BRONZE"
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_DW_Ventas",
+					"type": "LinkedServiceReference"
 				},
-				"type": "MappingDataFlow",
+				"folder": {
+					"name": "GOLD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_PRODUCTO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PRD_KEY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PRD_NM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PRD_COST",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "PRD_LINE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_CAT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MAINTENANCE",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "CSV_Clientes_location_Bronze",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_SQL_Bronze_Clientes_location",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          CID as string,",
-						"          CNTRY as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CID as string,",
-						"          CNTRY as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CID,",
-						"          CNTRY",
-						"     )) ~> sink1"
-					]
+					"schema": "gold",
+					"table": "DIM_PRODUCTOS"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV_Clientes_location_Bronze')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Bronze_Clientes_location')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_DW_Ventas')]"
 			]
 		}
 	]
