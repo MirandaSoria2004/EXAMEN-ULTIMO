@@ -59,7 +59,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "gold",
+			"schema": "GOLD",
 			"table": "HECHOS_DETALLE_VENTA"
 		}
 	}

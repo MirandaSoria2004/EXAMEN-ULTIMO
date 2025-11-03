@@ -50,7 +50,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "gold",
+			"schema": "GOLD",
 			"table": "DIM_FECHA"
 		}
 	}
