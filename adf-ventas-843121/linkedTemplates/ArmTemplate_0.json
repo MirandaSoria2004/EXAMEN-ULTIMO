@@ -656,10 +656,6 @@
 					{
 						"name": "CAT",
 						"type": "nvarchar"
-					},
-					{
-						"name": "SUBCAT",
-						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
@@ -687,17 +683,7 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "ID_CLIENTE",
-						"type": "int",
-						"precision": 10
-					},
-					{
 						"name": "CST_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CST_KEY",
 						"type": "nvarchar"
 					},
 					{
@@ -713,17 +699,17 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "CST_GNDR",
+						"name": "CST_GNRD",
 						"type": "nvarchar"
-					},
-					{
-						"name": "BDATE",
-						"type": "date"
 					},
 					{
 						"name": "ID_CNTRY",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "BDATE",
+						"type": "date"
 					},
 					{
 						"name": "ID_GEN",
@@ -797,34 +783,6 @@
 					{
 						"name": "FECHA",
 						"type": "date"
-					},
-					{
-						"name": "ANIO",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "MES",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DIA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "TRIMESTRE",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NOMBRE_MES",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOMBRE_DIA",
-						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
@@ -885,11 +843,6 @@
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
-					{
-						"name": "ID_PRODUCTO",
-						"type": "int",
-						"precision": 10
-					},
 					{
 						"name": "PRD_KEY",
 						"type": "nvarchar"
