@@ -19,10 +19,6 @@
 			{
 				"name": "CAT",
 				"type": "nvarchar"
-			},
-			{
-				"name": "SUBCAT",
-				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {

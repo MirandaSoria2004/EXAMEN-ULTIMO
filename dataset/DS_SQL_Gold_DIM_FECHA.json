@@ -19,34 +19,6 @@
 			{
 				"name": "FECHA",
 				"type": "date"
-			},
-			{
-				"name": "ANIO",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "MES",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "DIA",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "TRIMESTRE",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "NOMBRE_MES",
-				"type": "nvarchar"
-			},
-			{
-				"name": "NOMBRE_DIA",
-				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {

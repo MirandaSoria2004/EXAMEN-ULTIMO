@@ -21,14 +21,12 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "ID_CLIENTE",
-				"type": "int",
-				"precision": 10
+				"name": "SLS_PRD_KEY",
+				"type": "nvarchar"
 			},
 			{
-				"name": "ID_PRODUCTO",
-				"type": "int",
-				"precision": 10
+				"name": "SLS_CUST_ID",
+				"type": "nvarchar"
 			},
 			{
 				"name": "ID_ORDER_DT",

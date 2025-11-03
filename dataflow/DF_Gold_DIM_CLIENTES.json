@@ -1,0 +1,140 @@
+{
+	"name": "DF_Gold_DIM_CLIENTES",
+	"properties": {
+		"folder": {
+			"name": "GOLD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Silver_Clientes",
+						"type": "DatasetReference"
+					},
+					"name": "SourceClientes"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_COUNTRY",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDimCountry"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_GENERO",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDimGenero"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_CLIENTES",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LookupCountry"
+				},
+				{
+					"name": "LookupGenero"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          cst_id as integer,",
+				"          cst_key as string,",
+				"          cst_firstname as string,",
+				"          cst_lastname as string,",
+				"          cst_marital_status as string,",
+				"          cst_gndr as string,",
+				"          cst_bdate as date,",
+				"          cst_country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT * FROM [silver].[clientes]',",
+				"     format: 'query') ~> SourceClientes",
+				"source(output(",
+				"          ID_CNTRY as integer,",
+				"          CNTRY as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT ID_CNTRY, CNTRY FROM [GOLD].[DIM_COUNTRY]',",
+				"     format: 'query') ~> SourceDimCountry",
+				"source(output(",
+				"          ID_GEN as integer,",
+				"          GEN as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT ID_GEN, GEN FROM [GOLD].[DIM_GENERO]',",
+				"     format: 'query') ~> SourceDimGenero",
+				"SourceClientes, SourceDimCountry lookup(cst_country == CNTRY,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupCountry",
+				"LookupCountry, SourceDimGenero lookup(cst_gndr == GEN,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupGenero",
+				"LookupGenero select(mapColumn(",
+				"          CST_ID = cst_key,",
+				"          CST_FIRSTNAME = cst_firstname,",
+				"          CST_LASTNAME = cst_lastname,",
+				"          CST_MARITAL_STATUS = cst_marital_status,",
+				"          CST_GNRD = cst_gndr,",
+				"          BDATE = cst_bdate,",
+				"          ID_CNTRY,",
+				"          ID_GEN",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CST_ID as string,",
+				"          CST_FIRSTNAME as string,",
+				"          CST_LASTNAME as string,",
+				"          CST_MARITAL_STATUS as string,",
+				"          CST_GNRD as string,",
+				"          ID_CNTRY as integer,",
+				"          BDATE as date,",
+				"          ID_GEN as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CST_ID,",
+				"          CST_FIRSTNAME,",
+				"          CST_LASTNAME,",
+				"          CST_MARITAL_STATUS,",
+				"          CST_GNRD,",
+				"          ID_CNTRY,",
+				"          BDATE,",
+				"          ID_GEN",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

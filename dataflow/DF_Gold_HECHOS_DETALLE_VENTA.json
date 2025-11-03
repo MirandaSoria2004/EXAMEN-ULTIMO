@@ -1,0 +1,131 @@
+{
+	"name": "DF_Gold_HECHOS_DETALLE_VENTA",
+	"properties": {
+		"folder": {
+			"name": "GOLD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Silver_Ventas",
+						"type": "DatasetReference"
+					},
+					"name": "SourceVentas"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_FECHA",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDimFecha"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_FECHA",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDimFecha2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_HECHOS_DETALLE_VENTA",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LookupFechaOrder"
+				},
+				{
+					"name": "LookupFechaShip"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          sls_ord_num as string,",
+				"          sls_prd_key as string,",
+				"          sls_cust_id as integer,",
+				"          sls_order_dt as date,",
+				"          sls_ship_dt as date,",
+				"          sls_sales as decimal(10,2),",
+				"          sls_quantity as integer,",
+				"          sls_price as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT * FROM [silver].[ventas]',",
+				"     format: 'query') ~> SourceVentas",
+				"source(output(",
+				"          ID_FECHA as integer,",
+				"          FECHA as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT * FROM [GOLD].[DIM_FECHA]',",
+				"     format: 'query') ~> SourceDimFecha",
+				"source(output(",
+				"          ID_FECHA as integer,",
+				"          FECHA as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT * FROM [GOLD].[DIM_FECHA]',",
+				"     format: 'query') ~> SourceDimFecha2",
+				"SourceVentas, SourceDimFecha lookup(sls_order_dt == FECHA,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupFechaOrder",
+				"LookupFechaOrder, SourceDimFecha2 lookup(sls_ship_dt == SourceDimFecha2@FECHA,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupFechaShip",
+				"LookupFechaShip select(mapColumn(",
+				"          SLS_ORD_NUM = sls_ord_num,",
+				"          SLS_PRD_KEY = sls_prd_key,",
+				"          SLS_CUST_ID = sls_cust_id,",
+				"          SLS_SALES = sls_sales,",
+				"          SLS_QUANTITY = sls_quantity,",
+				"          SLS_PRICE = sls_price,",
+				"          ID_ORDER_DT = SourceDimFecha@ID_FECHA,",
+				"          ID_SHIP_DT = SourceDimFecha2@ID_FECHA",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_HECHOS as integer,",
+				"          SLS_ORD_NUM as string,",
+				"          SLS_PRD_KEY as string,",
+				"          SLS_CUST_ID as string,",
+				"          ID_ORDER_DT as integer,",
+				"          ID_SHIP_DT as integer,",
+				"          SLS_SALES as decimal(10,2),",
+				"          SLS_QUANTITY as integer,",
+				"          SLS_PRICE as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,100 @@
+{
+	"name": "DF_Gold_DIM_FECHA",
+	"properties": {
+		"folder": {
+			"name": "GOLD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Silver_Ventas",
+						"type": "DatasetReference"
+					},
+					"name": "SourceFechasOrder"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Silver_Ventas",
+						"type": "DatasetReference"
+					},
+					"name": "SourceFechasShip"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Gold_DIM_FECHA",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "union1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          sls_order_dt as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT sls_order_dt FROM [silver].[ventas]\\nWHERE sls_order_dt IS NOT NULL',",
+				"     format: 'query') ~> SourceFechasOrder",
+				"source(output(",
+				"          sls_ship_dt as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT sls_ship_dt FROM [silver].[ventas]\\nWHERE sls_ship_dt IS NOT NULL',",
+				"     format: 'query') ~> SourceFechasShip",
+				"SourceFechasOrder, SourceFechasShip union(byName: true)~> union1",
+				"union1 select(mapColumn(",
+				"          FECHA = sls_order_dt,",
+				"          FECHA = sls_ship_dt",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy(FECHA),",
+				"     fecha_p = count(FECHA)) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          FECHA",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FECHA as integer,",
+				"          FECHA as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          FECHA",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

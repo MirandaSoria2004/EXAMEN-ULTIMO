@@ -12,17 +12,7 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "ID_CLIENTE",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "CST_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "CST_KEY",
 				"type": "nvarchar"
 			},
 			{
@@ -38,17 +28,17 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "CST_GNDR",
+				"name": "CST_GNRD",
 				"type": "nvarchar"
-			},
-			{
-				"name": "BDATE",
-				"type": "date"
 			},
 			{
 				"name": "ID_CNTRY",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "BDATE",
+				"type": "date"
 			},
 			{
 				"name": "ID_GEN",

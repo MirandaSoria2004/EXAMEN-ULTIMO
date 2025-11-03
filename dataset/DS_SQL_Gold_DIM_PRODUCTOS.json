@@ -12,11 +12,6 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "ID_PRODUCTO",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "PRD_KEY",
 				"type": "nvarchar"
 			},
