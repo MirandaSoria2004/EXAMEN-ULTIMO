@@ -1,0 +1,66 @@
+{
+	"name": "DS_SQL_Gold_HECHOS_DETALLE_VENTA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_DW_Ventas",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_HECHOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SLS_ORD_NUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_CLIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_PRODUCTO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_ORDER_DT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_SHIP_DT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SLS_SALES",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "SLS_QUANTITY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SLS_PRICE",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "HECHOS_DETALLE_VENTA"
+		}
+	}
+}

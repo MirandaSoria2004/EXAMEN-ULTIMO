@@ -1,0 +1,29 @@
+{
+	"name": "DS_SQL_Gold_DIM_GENERO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_DW_Ventas",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_GEN",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GEN",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "DIM_GENERO"
+		}
+	}
+}

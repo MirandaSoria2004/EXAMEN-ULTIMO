@@ -1,0 +1,64 @@
+{
+	"name": "DS_SQL_Gold_DIM_CLIENTES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_DW_Ventas",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CLIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CST_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CST_KEY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CST_FIRSTNAME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CST_LASTNAME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CST_MARITAL_STATUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CST_GNDR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BDATE",
+				"type": "date"
+			},
+			{
+				"name": "ID_CNTRY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_GEN",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "DIM_CLIENTES"
+		}
+	}
+}
